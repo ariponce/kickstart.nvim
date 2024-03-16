@@ -770,21 +770,25 @@ require('lazy').setup({
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
-
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
+      -- local statusline = require 'mini.statusline'
+      -- -- set use_icons to true if you have a Nerd Font
+      -- statusline.setup { use_icons = vim.g.have_nerd_font }
+      --
+      -- -- You can configure sections in the statusline by overriding their
+      -- -- default behavior. For example, here we set the section for
+      -- -- cursor location to LINE:COLUMN
+      -- ---@diagnostic disable-next-line: duplicate-set-field
+      -- statusline.section_location = function()
+      --   return '%2l:%-2v'
+      -- end
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
 
   { -- Highlight, edit, and navigate code
@@ -852,6 +856,45 @@ require('lazy').setup({
   },
 })
 require('luasnip').filetype_extend('python', { 'django', 'django-rest' })
+local C = require('catppuccin.palettes').get_palette 'mocha'
+local O = require('catppuccin').options
+local transparent_bg = O.transparent_background and 'NONE' or C.mantle
+require('lualine').setup {
+  options = {
+    -- theme = 'catppuccin-mocha',
+    theme = {
+      normal = {
+        a = { fg = C.mantle, bg = C.mauve, gui = 'bold' },
+        b = { fg = C.blue, bg = C.surface1 },
+        c = { fg = C.text, bg = C.surface0 },
+      },
+      insert = {
+        a = { fg = C.base, bg = C.green, gui = 'bold' },
+        b = { fg = C.green, bg = C.surface0 },
+      },
+      command = {
+        a = { bg = C.peach, fg = C.base, gui = 'bold' },
+        b = { bg = C.surface0, fg = C.peach },
+      },
+
+      visual = {
+        a = { bg = C.blue, fg = C.base, gui = 'bold' },
+        b = { bg = C.surface0, fg = C.mauve },
+      },
+
+      replace = {
+        a = { bg = C.red, fg = C.base, gui = 'bold' },
+        b = { bg = C.surface0, fg = C.red },
+      },
+
+      inactive = {
+        a = { bg = transparent_bg, fg = C.blue },
+        b = { bg = transparent_bg, fg = C.surface1, gui = 'bold' },
+        c = { bg = transparent_bg, fg = C.overlay0 },
+      },
+    },
+  },
+}
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
