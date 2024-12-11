@@ -6,4 +6,5 @@ return {
   'github/copilot.vim',
   'mbbill/undotree',
   'nvim-treesitter/nvim-treesitter-context',
+  'deparr/tairiki.nvim',
 }
